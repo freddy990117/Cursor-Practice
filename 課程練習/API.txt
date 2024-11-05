@@ -1,0 +1,5 @@
+"react/prop-types": "off",
+
+`https://jsonplaceholder.typicode.com/users/${userId}`
+
+https://jsonplaceholder.typicode.com/users/1
