@@ -8,9 +8,9 @@ const Practice1028 = () => {
   const Mathfun3 = Components3(100);
 
   // 1.傳統函數宣告 (Function Declaration)
-  const Components1 = function (num1, num2) {
+  function Components1(num1, num2) {
     return num1 * num2;
-  };
+  }
 
   // 可進階使用 👇 2.Arror Function
   const Components2 = (num3, num4) => {
@@ -100,7 +100,7 @@ const Practice1028 = () => {
   }
 
   // 分別用 forEach & map 取 name 出來
-  forEach;
+
   const Each1 = languages.forEach((lang) => {
     // 遍歷 languages 陣列並印出 name
     console.log(lang.name);
