@@ -77,13 +77,15 @@ const Practice1112 = () => {
     );
   };
 
-  // 1. 生命週期
+  // 1. 生命週期    1.5 UseEffect 內不能執行重複的 state
   const LfieCycle1 = () => {
     const [count1, setCount] = useState(0);
     useEffect(() => {
-      console.log("生命週期開始1"); // 開始
+      // 不能設定 setCount(count1 + 1)，因為一開始 render 時會執行 useEffect 內的 Function
+      // 若設定 setCount(count1 + 1) 會偵測到 count1 改變，造成重複  render
+      console.log("生命週期開始1"); // 生命週期開始
       console.log(count1); // 印出 count
-      console.log("生命週期結束1"); // 結束
+      console.log("生命週期結束1"); // 生命週期結束
     }, [count1]); // count 改變時生命週期會再執行一次
     return (
       <div>
@@ -155,9 +157,15 @@ const Practice1112 = () => {
       </div>
     );
   };
-  return <LifeCycle3 />;
+
+  // 3.useRef
+
+  return;
   // <PropsPractice name="Freddy" age="20" id="TW" /> // 2.
   // <MapProps /> //2.5
+  // <LfieCycle1/>
+  // <LfieCycle2/>
+  // <LfieCycle3/>
 };
 
 export default Practice1112;
