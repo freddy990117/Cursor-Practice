@@ -1,16 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 const Practice1112 = () => {
-  // 上課內容 :
-  // const API = fetch("https://data.moa.gov.tw/api/v1/PesticideCompanyType/");
-  // useEffect(() => {
-  //   fetch("https://data.moa.gov.tw/api/v1/PesticideCompanyType/").then((res) =>
-  //     res.json().then((data) => {
-  //       setData(data.Data);
-  //     })
-  //   );
-
-  // 11/14 練習開始 :
-
+  // 11/14 練習開始
   // 1. 生命週期    1.5 UseEffect 內不能執行重複的 state
   const LfieCycle1 = () => {
     const [count1, setCount] = useState(0);
@@ -231,80 +221,71 @@ const Practice1112 = () => {
     );
   };
 
+  // 4.Global vs Local Variable
+  let globalConut = 0;
+  const GlobalVariable = () => {
+    const [componentCount, setcomponentCount] = useState(0);
+    // 區域變數設定
+    const localVariable = 0;
+
+    // 設定 Component render 時 + 1
+    useEffect(() => {
+      localVariable + 1;
+    }, [componentCount]);
+
+    return (
+      <div>
+        <h2>我是globalConut : {globalConut} </h2>
+        <h2>我是componentCount : {componentCount} </h2>
+
+        {/* !!! 但結果並沒有 +1，這是因為區域變數只存在於 Component 內，且每次執行時，都會被重新創建，永遠會保持在當初設定的值*/}
+        <h2>我是localVariable : {localVariable}</h2>
+
+        <button
+          onClick={() => {
+            setcomponentCount(componentCount + 1);
+          }}
+        >
+          Plus Number
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div>
-      <UseRef4 />
+      {/* <LfieCycle1 />
+      <LfieCycle2 />
+      <LfieCycle3 />
+      <MapProps />
+      <PropsPractice name="Freddy" age="20" id="TW" />
+      <UseRef1 />
+      <UseRef2 />
+      <UseRef3 />
+      <UseRef4 /> */}
+      {/* 4.Global vs Local Variable */}
+      {/* <div>
+        <button
+          onClick={() => {
+            // 即使 Global Variable + 1，但畫面不 render 的話是沒辦法顯示
+            globalConut += 1;
+          }}
+        >
+          globalConut
+        </button>
+        <GlobalVariable />
+      </div> */}
     </div>
   );
 };
-// <LfieCycle1/>
-// <LfieCycle2/>
-// <LfieCycle3/>
-// <MapProps />
-// <PropsPractice name="Freddy" age="20" id="TW" /> // 2.
-//<UseRef1>
-//<UseRef2>
-// 4.Global vs Local Variable
-{
-  /* <div>
-  <button
-    onClick={() => {
-      // 即使 Global Variable + 1，但畫面不 render 的話是沒辦法顯示
-      globalConut += 1;
-    }}
-  >
-    globalConut
-  </button>
-  <GlobalVariable />
-</div>; */
-}
 
-// 4.Global vs Local Variable
-// let globalConut = 0;
-// const GlobalVariable = () => {
-//   const [componentCount, setcomponentCount] = useState(0);
-//   // 區域變數設定
-//   const localVariable = 0;
-
-//   // 設定 Component render 時 + 1
-//   useEffect(() => {
-//     localVariable + 1;
-//   }, [componentCount]);
-
-//   return (
-//     <div>
-//       <h2>我是globalConut : {globalConut} </h2>
-//       <h2>我是componentCount : {componentCount} </h2>
-
-//       {/* !!! 但結果並沒有 +1，這是因為區域變數只存在於 Component 內，且每次執行時，都會被重新創建，永遠會保持在當初設定的值*/}
-//       <h2>我是localVariable : {localVariable}</h2>
-
-//       <button
-//         onClick={() => {
-//           setcomponentCount(componentCount + 1);
-//         }}
-//       >
-//         Plus Number
-//       </button>
-//     </div>
-//   );
-// };
 export default Practice1112;
 
-// 3.useRef number useRef ref = {} => 指定
-
-/* <input type="text" ref={stringRef} /> */
-//     {/* 設定 element 變數讓 ref 綁定 element， */}
-//     {/* <input
-//       type="text"
-//       ref={(element) => {
-//         stringRef.current = element;
-//       }} //     {/* 讓input先不成線後再寫出 hi222 */}
-//     {/* <input
-//       type="text"
-//       ref={(element) => {
-//         stringRef.current = element;
-//       }} */}
-// onClick={() => {
-//   stringRef.current.value = "hi222";
-// stringRef.current.value = "hi";
+// 1112 老師出的作業 : 用這個 API 創建一個表格 (要加入 CSS )
+// const API = fetch("https://data.moa.gov.tw/api/v1/PesticideCompanyType/");
+// useEffect(() => {
+//   fetch("https://data.moa.gov.tw/api/v1/PesticideCompanyType/").then((res) =>
+//     res.json().then((data) => {
+//       setData(data.Data);
+//     })
+//   );
