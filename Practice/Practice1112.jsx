@@ -179,15 +179,15 @@ const Practice1112 = () => {
 
   // ref = {} 的綁定練習
   const UseRef3 = () => {
-    const initialRef = useRef("I am initialRef");
-    console.log(initialRef.current);
+    const initialRef3 = useRef("I am initialRef3");
+    console.log(initialRef3.current);
 
     return (
       <div>
-        <input type="text" ref={initialRef} />
+        <input type="text" ref={initialRef3} />
         <button
           onClick={() => {
-            initialRef.current.value = "Change Input Ref by btn";
+            initialRef3.current.value = "Change Input Ref by btn";
           }}
         >
           Change
@@ -199,66 +199,66 @@ const Practice1112 = () => {
 
   // 在 input 內先顯示 ref 的值
   const UseRef4 = () => {
-    const initialRef2 = useRef(null);
+    const initialRef4 = useRef(null);
+
     // Render 時執行
     useEffect(() => {
-      // 確定 initialRef2 內沒有值後
-      if (initialRef2.current) {
-        initialRef2.current.value = "I am initialRef2";
+      // 確定 initialRef4 內沒有值後
+      if (initialRef4.current) {
+        initialRef4.current.value = "I am initialRef4";
       }
     }, []);
 
+    const changeHandler = () => {
+      if (initialRef4.current) {
+        initialRef4.current.value = "Change By Hander";
+      }
+    };
     return (
       <div>
-        <input type="text" ref={initialRef2} />
+        <input type="text" ref={initialRef4} />
         <button
+          // 1.Call Back function
           onClick={() => {
-            initialRef2.current.value = "Change input Ref2 by btn";
+            initialRef4.current.value = "Change input Ref2 by btn";
           }}
         >
-          Change
+          Change By CallBack
         </button>
+        {/* 2.指定 ref.current 為參數 */}
+        <button onClick={changeHandler}>Change By Hander</button>
       </div>
     );
   };
 
-  const UseRef5 = () => {
-    const initialRef5 = useRef("I am initialRef5");
-
-    return (
-      <input
-        ref={(ele) => {
-          initialRef5.current = ele;
-          console.log(ele);
-        }}
-      />
-    );
-  };
   return (
     <div>
-      <UseRef5 />
+      <UseRef4 />
     </div>
   );
-  // <LfieCycle1/>
-  // <LfieCycle2/>
-  // <LfieCycle3/>
-  // <MapProps />
-  // <PropsPractice name="Freddy" age="20" id="TW" /> // 2.
-  //<UseRef1>
-  //<UseRef2>
-  // 4.Global vs Local Variable
-  // <div>
-  //   <button
-  //     onClick={() => {
-  //       // 即使 Global Variable + 1，但畫面不 render 的話是沒辦法顯示
-  //       globalConut += 1;
-  //     }}
-  //   >
-  //     globalConut
-  //   </button>
-  //   <GlobalVariable />
-  // </div>;
 };
+// <LfieCycle1/>
+// <LfieCycle2/>
+// <LfieCycle3/>
+// <MapProps />
+// <PropsPractice name="Freddy" age="20" id="TW" /> // 2.
+//<UseRef1>
+//<UseRef2>
+// 4.Global vs Local Variable
+{
+  /* <div>
+  <button
+    onClick={() => {
+      // 即使 Global Variable + 1，但畫面不 render 的話是沒辦法顯示
+      globalConut += 1;
+    }}
+  >
+    globalConut
+  </button>
+  <GlobalVariable />
+</div>; */
+}
+
 // 4.Global vs Local Variable
 // let globalConut = 0;
 // const GlobalVariable = () => {
