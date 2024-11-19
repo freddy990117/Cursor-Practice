@@ -281,11 +281,3 @@ const Practice1112 = () => {
 
 export default Practice1112;
 
-// 1112 老師出的作業 : 用這個 API 創建一個表格 (要加入 CSS )
-// const API = fetch("https://data.moa.gov.tw/api/v1/PesticideCompanyType/");
-// useEffect(() => {
-//   fetch("https://data.moa.gov.tw/api/v1/PesticideCompanyType/").then((res) =>
-//     res.json().then((data) => {
-//       setData(data.Data);
-//     })
-//   );
