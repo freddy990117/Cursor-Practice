@@ -8,9 +8,10 @@ import React, {
 // 父元件
 const Practice1119 = () => {
   const funRef = useRef();
+  const inputRef = useRef();
   return (
     <div>
-      <Number
+      {/* <Number
         {...{
           ref: funRef,
         }}
@@ -21,7 +22,10 @@ const Practice1119 = () => {
         }}
       >
         Show
-      </button>
+      </button> */}
+      <Input ref={inputRef} />
+      <button onClick={() => inputRef.current.focus()}>focus</button>
+      <button onClick={() => inputRef.current.clear()}>clear</button>
     </div>
   );
 };
@@ -88,4 +92,14 @@ const Number = forwardRef((props, ref) => {
   );
 });
 
+const Input = forwardRef((prop, ref) => {
+  const sonRef = useRef();
+  useImperativeHandle(ref, () => {
+    return {
+      focus: () => sonRef.current.focus(),
+      clear: () => (sonRef.current.value = ""),
+    };
+  });
+  return <input ref={sonRef} type="text" />;
+});
 export default Practice1119;

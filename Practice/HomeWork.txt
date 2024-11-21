@@ -15,22 +15,13 @@ input、chechbox、select、button
 forwardRef、useImperativeHandle 測驗 : 
 基礎問題
 1.forwardRef 的作用是什麼？為什麼我們需要它？
-
 2.當父元件使用 useRef 傳遞給子元件時，子元件會如何接收這個 ref？是通過哪個參數？
-
 3.如果子元件中沒有使用 useImperativeHandle，那麼父元件的 ref.current 會是什麼？
-
 進階問題
 4.在 useImperativeHandle 中，第一個參數 ref 是什麼？它的來源是什麼？
-
 5.在 useImperativeHandle 中，第二個參數是一個函式，它的返回值是什麼，返回的內容會被用在哪裡？
-
 6.在 useImperativeHandle 中為什麼要有第三個參數（依賴陣列）？如果不提供這個陣列會發生什麼情況？
-
 情境問題
 7.如果你想讓父元件控制子元件的 input，如聚焦或清除內容，如何設計一個有 forwardRef 和 useImperativeHandle 的子元件來實現？（用文字或程式碼簡述）
-
 8.如果 useImperativeHandle 中返回了 { increment: () => setCount(count + 1) }，父元件要如何呼叫 increment？
-
 9.你認為 useImperativeHandle 的最佳使用場景是什麼？可以舉一個你能想像的例子嗎？
-
