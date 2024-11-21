@@ -1,11 +1,11 @@
 import React, {
   forwardRef,
   useImperativeHandle,
-  useReducer,
   useRef,
   useState,
 } from "react";
 
+// 父元件
 const Practice1119 = () => {
   const funRef = useRef();
   return (
@@ -26,12 +26,14 @@ const Practice1119 = () => {
   );
 };
 
-// forwardRef
+// 子元件 forwardRef
+// forwardRef 的第二個參數 ref 讓父元素可以直接操控子元素內的 ref.current
 const Number = forwardRef((props, ref) => {
   const [value, setValue] = useState(0);
   const [validate, setValidate] = useState("");
 
-  // 將 ref 裝成 Object 丟進
+  // 第一個參數 ref 是 forward 的 ref，而父元素可以通過 ref = {XXX} 操作
+  // 第二個參數設定的 Object
   useImperativeHandle(
     ref,
     () => {
@@ -50,24 +52,25 @@ const Number = forwardRef((props, ref) => {
       {validate ? (
         <h3
           style={{
-            fontSize: 20,
-            color: "blue",
+            fontSize: 30,
           }}
         >
           {validate}
         </h3>
       ) : null}
 
-      {/* input 元件 */}
+      {/* 我在 input 內會發生的事情  */}
       <input
         {...{
           ref: (ele) => (ref.current = ele),
           type: "text",
           value,
           placeholder: "請輸入驗證碼",
+          // 改變時觸發
           onChange: (e) => {
             setValue(e.target.value);
           },
+          // 離開時觸發
           onBlur: (e) => {
             // 4碼驗證碼
             let reg = /[0-9]{4}/;
