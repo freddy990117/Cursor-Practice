@@ -9,6 +9,7 @@ import React, {
 const Practice1119 = () => {
   const funRef = useRef();
   const inputRef = useRef();
+  const chechRef = useRef();
   return (
     <div>
       {/* <Number
@@ -24,19 +25,50 @@ const Practice1119 = () => {
         Show
       </button> */}
       {/* Input Box */}
-      <Input
+      {/* <Input
         ref={inputRef}
         placeholder="Type Somthing (inputRef)"
         className="input-ref"
       />
       <br />
-      <button onClick={() => inputRef.current.clear()}>Clear</button>
+      <button onClick={() => inputRef.current.clear()}>Clear</button> */}
+      {/* Chech Box */}
+      <ChechBox ref={chechRef} />
     </div>
   );
 };
 
-// 子元件 forwardRef
-// forwardRef 的第二個參數 ref 讓父元素可以直接操控子元素內的 ref.current
+const ChechBox = forwardRef((props, ref) => {
+  // 在子元件中創建 inputRef
+  const inputRef = useRef();
+  const [checked, setChecked] = useState(false);
+  console.log(checked);
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        check: () => {
+          setChecked(true);
+        },
+      };
+    },
+    [checked]
+  );
+  // 返回 inputRef
+  return (
+    <div>
+      <input
+        type="checkbox"
+        ref={inputRef}
+        // 印出目前 cheched 的狀態
+        onChange={(e) => setChecked(e.target.checked)}
+      />
+      <h2>{checked ? "checkbox的狀態是 True" : "checkbox的狀態是 False "}</h2>
+    </div>
+  );
+});
+
+// 老師寫的
 const Number = forwardRef((props, ref) => {
   const [value, setValue] = useState(0);
   const [validate, setValidate] = useState("");
