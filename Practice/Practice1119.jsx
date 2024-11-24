@@ -23,9 +23,14 @@ const Practice1119 = () => {
       >
         Show
       </button> */}
-      <Input ref={inputRef} />
-      <button onClick={() => inputRef.current.focus()}>focus</button>
-      <button onClick={() => inputRef.current.clear()}>clear</button>
+      {/* Input Box */}
+      <Input
+        ref={inputRef}
+        placeholder="Type Somthing (inputRef)"
+        className="input-ref"
+      />
+      <br />
+      <button onClick={() => inputRef.current.clear()}>Clear</button>
     </div>
   );
 };
@@ -92,14 +97,33 @@ const Number = forwardRef((props, ref) => {
   );
 });
 
-const Input = forwardRef((prop, ref) => {
-  const sonRef = useRef();
+const Input = forwardRef((props, ref) => {
+  const { placeholder, className } = props;
+  const inputRef = useRef();
   useImperativeHandle(ref, () => {
     return {
-      focus: () => sonRef.current.focus(),
-      clear: () => (sonRef.current.value = ""),
+      clear: () => {
+        inputRef.current.value = "";
+      },
     };
   });
-  return <input ref={sonRef} type="text" />;
+  return (
+    <input
+      style={style}
+      ref={inputRef}
+      type="text"
+      placeholder={placeholder}
+      className={className}
+    />
+  );
 });
+
+const style = {
+  borderRadius: 5,
+  backgroundColor: "white",
+  fontSize: 18,
+  border: "none",
+  padding: 10,
+  color: "black",
+};
 export default Practice1119;
