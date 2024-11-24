@@ -12,7 +12,8 @@ const Practice1119 = () => {
   const chechRef = useRef();
   return (
     <div>
-      {/* <Number
+      <div className="teacher">
+        {/* <Number
         {...{
           ref: funRef,
         }}
@@ -24,50 +25,86 @@ const Practice1119 = () => {
       >
         Show
       </button> */}
+      </div>
       {/* Input Box */}
-      {/* <Input
-        ref={inputRef}
-        placeholder="Type Somthing (inputRef)"
-        className="input-ref"
-      />
+      <div className="InputBox">
+        <Input
+          ref={inputRef}
+          placeholder="Type Somthing (inputRef)"
+          className="input-ref"
+        />
+        <button onClick={() => inputRef.current.clear()}>Clear</button>
+      </div>
       <br />
-      <button onClick={() => inputRef.current.clear()}>Clear</button> */}
       {/* Chech Box */}
-      <ChechBox ref={chechRef} />
+      <div className="Checkbox">
+        <ChechBox ref={chechRef} />
+        {/* 勾選 */}
+        <button
+          style={buttonStyle}
+          onClick={() => {
+            chechRef.current.checked();
+          }}
+        >
+          勾選
+        </button>
+        {/* 取消勾選 */}
+        <button
+          style={buttonStyle}
+          onClick={() => {
+            chechRef.current.unchecked();
+          }}
+        >
+          取消勾選
+        </button>
+        {/* 更換狀態 */}
+        <button
+          style={buttonStyle}
+          onClick={() => {
+            chechRef.current.toggle();
+          }}
+        >
+          更換狀態
+        </button>
+      </div>
     </div>
   );
 };
 
 const ChechBox = forwardRef((props, ref) => {
-  // 在子元件中創建 inputRef
-  const inputRef = useRef();
-  const [checked, setChecked] = useState(false);
-  console.log(checked);
+  const [state, setState] = useState(false);
   useImperativeHandle(
     ref,
     () => {
       return {
-        check: () => {
-          setChecked(true);
+        checked: () => {
+          setState(true);
+        },
+        unchecked: () => {
+          setState(false);
+        },
+        toggle: () => {
+          setState((prev) => !prev);
         },
       };
     },
-    [checked]
+    [state]
   );
-  // 返回 inputRef
   return (
     <div>
       <input
         type="checkbox"
-        ref={inputRef}
-        // 印出目前 cheched 的狀態
-        onChange={(e) => setChecked(e.target.checked)}
+        checked={state}
+        onChange={(e) => setState(e.target.checked)}
       />
-      <h2>{checked ? "checkbox的狀態是 True" : "checkbox的狀態是 False "}</h2>
+      <h2>
+        {state
+          ? "CheckBox 狀態為: True (已勾選)"
+          : "CheckBox 狀態為: False (未勾選)"}
+      </h2>
     </div>
   );
 });
-
 // 老師寫的
 const Number = forwardRef((props, ref) => {
   const [value, setValue] = useState(0);
@@ -141,7 +178,7 @@ const Input = forwardRef((props, ref) => {
   });
   return (
     <input
-      style={style}
+      style={inputStyle}
       ref={inputRef}
       type="text"
       placeholder={placeholder}
@@ -150,12 +187,19 @@ const Input = forwardRef((props, ref) => {
   );
 });
 
-const style = {
+const inputStyle = {
   borderRadius: 5,
   backgroundColor: "white",
   fontSize: 18,
   border: "none",
   padding: 10,
   color: "black",
+  marginRight: 10,
+};
+
+const buttonStyle = {
+  margin: "0 5px ",
+  border: "none",
+  borderRadius: "5px",
 };
 export default Practice1119;
