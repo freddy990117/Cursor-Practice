@@ -1,3 +1,4 @@
+import { set, values } from "lodash";
 import React, {
   forwardRef,
   useImperativeHandle,
@@ -10,6 +11,7 @@ const Practice1119 = () => {
   const funRef = useRef();
   const inputRef = useRef();
   const chechRef = useRef();
+  const animalRef = useRef();
   return (
     <div>
       <div className="teacher">
@@ -41,7 +43,7 @@ const Practice1119 = () => {
         <ChechBox ref={chechRef} />
         {/* 勾選 */}
         <button
-          style={buttonStyle}
+          style={checkStyle}
           onClick={() => {
             chechRef.current.checked();
           }}
@@ -50,7 +52,7 @@ const Practice1119 = () => {
         </button>
         {/* 取消勾選 */}
         <button
-          style={buttonStyle}
+          style={checkStyle}
           onClick={() => {
             chechRef.current.unchecked();
           }}
@@ -59,7 +61,7 @@ const Practice1119 = () => {
         </button>
         {/* 更換狀態 */}
         <button
-          style={buttonStyle}
+          style={checkStyle}
           onClick={() => {
             chechRef.current.toggle();
           }}
@@ -67,8 +69,81 @@ const Practice1119 = () => {
           更換狀態
         </button>
       </div>
+      {/* Select Form */}
+      <div className="select">
+        <SelectForm ref={animalRef} />
+      </div>
     </div>
   );
+};
+
+const SelectForm = forwardRef((props, ref) => {
+  const animalRef = useRef();
+  const [animal, setAnimal] = useState();
+  useImperativeHandle(ref, () => {
+    return {
+      changeSelect: () => {
+        setAnimal(animalRef.current.value);
+        console.log(animal);
+      },
+
+      //   clearSelection: () => {
+      //     animal.current.value = "";
+      //   },
+      // };
+    };
+  });
+  return (
+    <div>
+      <select
+        value={animal}
+        style={selectStyle}
+        ref={animalRef}
+        onChange={(e) => {
+          setAnimal(e.target.value);
+        }}
+      >
+        <option value="">Choose</option>
+        <option value="Cat">Cat</option>
+        <option value="Dog">Dog</option>
+        <option value="Zebra">Zebra</option>
+        <option value="Tiger">Tiger</option>
+        <option value="Lion">Lion</option>
+      </select>
+      <h2>{animal ? `你挑選的動物是 : ${animal}` : "尚未挑選動物"}</h2>
+    </div>
+  );
+});
+
+const Input = forwardRef((props, ref) => {
+  const { placeholder, className } = props;
+  const inputRef = useRef();
+  useImperativeHandle(ref, () => {
+    return {
+      clear: () => {
+        inputRef.current.value = "";
+      },
+    };
+  });
+  return (
+    <input
+      style={inputStyle}
+      ref={inputRef}
+      type="text"
+      placeholder={placeholder}
+      className={className}
+    />
+  );
+});
+
+const inputStyle = {
+  borderRadius: 5,
+  backgroundColor: "white",
+  fontSize: 18,
+  border: "none",
+  padding: 10,
+  color: "black",
+  marginRight: 10,
 };
 
 const ChechBox = forwardRef((props, ref) => {
@@ -105,6 +180,19 @@ const ChechBox = forwardRef((props, ref) => {
     </div>
   );
 });
+
+const checkStyle = {
+  margin: "0 5px ",
+  border: "none",
+  borderRadius: "5px",
+};
+
+const selectStyle = {
+  fontSize: 20,
+  padding: 10,
+  marginTop: 30,
+};
+
 // 老師寫的
 const Number = forwardRef((props, ref) => {
   const [value, setValue] = useState(0);
@@ -165,41 +253,4 @@ const Number = forwardRef((props, ref) => {
     </div>
   );
 });
-
-const Input = forwardRef((props, ref) => {
-  const { placeholder, className } = props;
-  const inputRef = useRef();
-  useImperativeHandle(ref, () => {
-    return {
-      clear: () => {
-        inputRef.current.value = "";
-      },
-    };
-  });
-  return (
-    <input
-      style={inputStyle}
-      ref={inputRef}
-      type="text"
-      placeholder={placeholder}
-      className={className}
-    />
-  );
-});
-
-const inputStyle = {
-  borderRadius: 5,
-  backgroundColor: "white",
-  fontSize: 18,
-  border: "none",
-  padding: 10,
-  color: "black",
-  marginRight: 10,
-};
-
-const buttonStyle = {
-  margin: "0 5px ",
-  border: "none",
-  borderRadius: "5px",
-};
 export default Practice1119;
