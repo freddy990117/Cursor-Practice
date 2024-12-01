@@ -25,3 +25,16 @@ forwardRef、useImperativeHandle 測驗 :
 7.如果你想讓父元件控制子元件的 input，如聚焦或清除內容，如何設計一個有 forwardRef 和 useImperativeHandle 的子元件來實現？（用文字或程式碼簡述）
 8.如果 useImperativeHandle 中返回了 { increment: () => setCount(count + 1) }，父元件要如何呼叫 increment？
 9.你認為 useImperativeHandle 的最佳使用場景是什麼？可以舉一個你能想像的例子嗎？
+
+11/26
+1.請問 useLayoutEffect 與 useEffect 的主要差別是什麼？
+
+2.useMemo 的作用是什麼？請簡單解釋。
+
+
+3.useCallback 的作用是什麼？請簡單解釋。
+
+
+4.React.memo 的作用是什麼？請簡單解釋。
+
+
