@@ -6,11 +6,11 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import _, { set } from "lodash";
+import _, { random, set } from "lodash";
 const Practice1126 = () => {
   return (
     <div>
-      <CallbackParent />
+      <Parent />
     </div>
   );
 };
@@ -133,6 +133,39 @@ const ReactMemoPractice = React.memo(({ increment, decrement, normalPlus }) => {
     </div>
   );
 });
+
+// React.memo
+const Parent = () => {
+  const [count, setCount] = useState(0);
+  const [text, setText] = useState("");
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setCount((prev) => prev + 1);
+        }}
+      >
+        Plus
+      </button>
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => {
+          setText(e.target.value);
+        }}
+      />
+      <Child count={count} />
+    </div>
+  );
+};
+
+const Child = React.memo(({ count }) => {
+  console.log("Child Re-Render");
+  return <h2>{count}</h2>;
+});
+
+const MemoizedChild = React.memo(Child);
+
 // 老師寫的
 // useLayoutEffect
 
