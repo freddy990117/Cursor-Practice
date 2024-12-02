@@ -10,7 +10,7 @@ import _, { random, set } from "lodash";
 const Practice1126 = () => {
   return (
     <div>
-      <Parent />
+      <MemoParent />
     </div>
   );
 };
@@ -27,6 +27,7 @@ const LayoutPractice = () => {
     console.log("useEffect 在 DOM 更新後執行");
   });
 };
+
 const LayoutPractice2 = () => {
   const [message, setMessage] = useState("初始的Message");
 
@@ -164,7 +165,35 @@ const Child = React.memo(({ count }) => {
   return <h2>{count}</h2>;
 });
 
-const MemoizedChild = React.memo(Child);
+const MemoParent = () => {
+  const [item, setItem] = useState([]);
+  const [count, setCount] = useState(0);
+  const plusNumber = useCallback(() => {
+    setItem([...item, item.length + 1]);
+  }, [item]);
+  return (
+    <div>
+      {/* 當使用 useCallback 時，函式內部的狀態沒有改變，React.memo 便不會被觸發，達到不必要渲染的功能 */}
+      <button onClick={plusNumber}>Item Plus</button>
+      <button
+        onClick={() => {
+          setCount((prev) => prev + 1);
+          console.log("Count增加了，但Item沒變");
+        }}
+      >
+        Count Plus
+      </button>
+      <MemoChild item={item} />
+      <h2>我是Count: {count}</h2>
+    </div>
+  );
+};
+
+const MemoChild = React.memo(({ item }) => {
+  console.log("按下 Item Plus 後，Item 會新增但 Count 不會");
+  console.log("子元件重新渲染了!");
+  return <h2>我是item: {item.join(",")}</h2>;
+});
 
 // 老師寫的
 // useLayoutEffect
