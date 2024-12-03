@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Practice1203 from "../../Practice/Practice1203";
+import Practice1203 from "./Practice1203";
 const App = () => {
   return (
     <div>
