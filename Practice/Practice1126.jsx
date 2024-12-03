@@ -6,7 +6,6 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import _, { random, set } from "lodash";
 const Practice1126 = () => {
   return (
     <div>
