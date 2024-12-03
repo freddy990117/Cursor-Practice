@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import Practice1126 from "../../Practice/Practice1126";
+import Practice1203 from "../../Practice/Practice1203";
 const App = () => {
   return (
     <div>
-      <Practice1126 />
+      <Practice1203 />
     </div>
   );
 };
