@@ -12,74 +12,10 @@ const Practice1203 = () => {
 };
 
 // 用 useMediaQuery 創建一個組件，當螢幕寬度小於 250px 時顯示一個簡單的行動裝置菜單。
-const MyComponent1 = () => {
-  // 存放 RWD 變數
-  const isMobile = useMediaQuery({ query: "(max-width:250px)" });
-  // 存放 Hamburger 套件
-  const [isOpen, setOpen] = useState(true);
-
-  // 當 isMobile 改變時執行
-  useEffect(() => {
-    isMobile ? setOpen(false) : setOpen(true);
-  }, [isMobile]);
-
-  const headerStyle = isMobile
-    ? { position: "absolute", top: 10, left: 10, padding: 10 }
-    : { position: "fixed", top: 10, left: 10, padding: 10 };
-
-  return (
-    <div>
-      <div className="header" style={headerStyle}>
-        <Hamburger toggled={isOpen} toggle={setOpen} />
-      </div>
-      {isMobile ? (
-        <div>
-          <h2>手機畫面</h2>
-        </div>
-      ) : (
-        <div>
-          <h2>電腦畫面</h2>
-        </div>
-      )}
-    </div>
-  );
-};
+const MyComponent1 = () => {};
 
 // 根據螢幕寬度變化，動態改變背景色
-const MyComponent2 = () => {
-  const isSmall = useMediaQuery({ query: "(max-width:401px)" });
-  const isMedia = useMediaQuery({
-    query: "(min-width:401px) and (max-width:800px)",
-  });
-  const isLarge = useMediaQuery({ query: "(min-width:800px)" });
-  // 用 props 的方式包裝
-
-  // const { backgroundStyle, content } = (() => {
-  //   if (isSmall) return { backgroundStyle: "lightblue", content: "小於 400px" };
-  //   if (isMobile)
-  //     return { backgroundStyle: "lightgreen", content: "400px - 800px之間" };
-  //   return { backgroundStyle: "lightcoral", content: "大於 800px" };
-  // })();
-
-  const { backgroundStyle, content } = isSmall
-    ? { backgroundStyle: "lightblue", content: "小於400px" }
-    : isMobile
-    ? { backgroundStyle: "lightgreen", content: "介於400px-800px之間" }
-    : { backgroundStyle: "lightcoral", content: "大於800px" };
-    // 
-  useEffect(() => {
-    document.body.style.backgroundColor = backgroundStyle;
-    return () => {
-      document.body.style.backgroundColor = ""; // 清理副作用
-    };
-  }, [backgroundStyle]);
-
-  return (
-    <div style={{ width: "100%", height: "100vh" }}>
-      <h2>{content}</h2>
-    </div>
-  );
-};
+const MyComponent2 = () => {};
 
 export default Practice1203;
 {
