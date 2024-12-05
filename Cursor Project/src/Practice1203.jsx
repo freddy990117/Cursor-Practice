@@ -47,25 +47,40 @@ const MyComponent1 = () => {
 
 // 根據螢幕寬度變化，動態改變背景色
 const MyComponent2 = () => {
-  const [color, setColor] = useState();
-  // 存放 RWD 變數
-  const isSmall = useMediaQuery({ query: "(max-width:400px)" });
-  const isMobile = useMediaQuery({
-    query: "(min-width:401px)  and (max-width:800px)",
+  const isSmall = useMediaQuery({ query: "(max-width:401px)" });
+  const isMedia = useMediaQuery({
+    query: "(min-width:401px) and (max-width:800px)",
   });
-  const isDesktop = useMediaQuery({ query: "(min-width:801px)" });
+  const isLarge = useMediaQuery({ query: "(min-width:800px)" });
+  // 用 props 的方式包裝
+
+  // const { backgroundStyle, content } = (() => {
+  //   if (isSmall) return { backgroundStyle: "lightblue", content: "小於 400px" };
+  //   if (isMobile)
+  //     return { backgroundStyle: "lightgreen", content: "400px - 800px之間" };
+  //   return { backgroundStyle: "lightcoral", content: "大於 800px" };
+  // })();
+
+  const { backgroundStyle, content } = isSmall
+    ? { backgroundStyle: "lightblue", content: "小於400px" }
+    : isMobile
+    ? { backgroundStyle: "lightgreen", content: "介於400px-800px之間" }
+    : { backgroundStyle: "lightcoral", content: "大於800px" };
+    // 
+  useEffect(() => {
+    document.body.style.backgroundColor = backgroundStyle;
+    return () => {
+      document.body.style.backgroundColor = ""; // 清理副作用
+    };
+  }, [backgroundStyle]);
+
   return (
-    <div>
-      {isSmall ? (
-        <h2>小於 400 px</h2>
-      ) : isMobile ? (
-        <h2>400px-800之間</h2>
-      ) : (
-        <h2>大於800</h2>
-      )}
+    <div style={{ width: "100%", height: "100vh" }}>
+      <h2>{content}</h2>
     </div>
   );
 };
+
 export default Practice1203;
 {
   /* <div className="header" style={mobileStyle}><div/> */
