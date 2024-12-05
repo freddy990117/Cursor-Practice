@@ -45,6 +45,27 @@ const MyComponent1 = () => {
   );
 };
 
+// 根據螢幕寬度變化，動態改變背景色
+const MyComponent2 = () => {
+  const [color, setColor] = useState();
+  // 存放 RWD 變數
+  const isSmall = useMediaQuery({ query: "(max-width:400px)" });
+  const isMobile = useMediaQuery({
+    query: "(min-width:401px)  and (max-width:800px)",
+  });
+  const isDesktop = useMediaQuery({ query: "(min-width:801px)" });
+  return (
+    <div>
+      {isSmall ? (
+        <h2>小於 400 px</h2>
+      ) : isMobile ? (
+        <h2>400px-800之間</h2>
+      ) : (
+        <h2>大於800</h2>
+      )}
+    </div>
+  );
+};
 export default Practice1203;
 {
   /* <div className="header" style={mobileStyle}><div/> */
