@@ -6,22 +6,81 @@ import axios from "axios";
 
 const Practice1203 = () => {
   // 初始化 QueryClient
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: true, // 當視窗重新聚焦時重新抓取
+      },
+    },
+  });
 
   return (
     <div>
       <QueryClientProvider client={queryClient}>
-        <MyComponent5 />
+        <MyComponent6 />
       </QueryClientProvider>
     </div>
   );
 };
 
+const MyComponent6 = () => {
+  const [userID, setUserID] = useState(1);
+
+  // 抓取 API 資料
+  const fetchData = async (userID) => {
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/users/${userID}`
+    );
+    // 這邊取得了 API Data
+    return response.data;
+  };
+  // 顯示使用者資訊
+  // 使用 useQuery 顯示資料
+  const { data, isLoading, error } = useQuery(
+    [userID], // 第一個參數是 key ，會根據 userID 而改變);
+    () => fetchData(userID), // 第二個參數是要抓取的資料
+    // 第三個參數是 : 要設定的狀態
+    {
+      keepPreviousData: true, // 保留前一次資料
+      retry: 3, // 錯誤時重試3次
+      retryDelay: 1000, // 每次重試延遲1秒
+      staleTime: 5000, // 資料5秒內視為新鮮
+      cacheTime: 10000, // 資料10秒內會被緩存
+    }
+  );
+  if (isLoading) return <p>Loading.....</p>;
+  if (error) return <p>Error : {error.maeeage}</p>;
+
+  return (
+    <div>
+      <h2>{data?.name}</h2>
+
+      {/* UserID 增加 */}
+      <button
+        onClick={() => {
+          setUserID((prev) => Math.min(prev + 1, 10));
+        }}
+      >
+        +++
+      </button>
+
+      {/* UserID 減少 */}
+      <button
+        onClick={() => {
+          setUserID((prev) => Math.max(prev - 1, 1));
+        }}
+      >
+        ---
+      </button>
+    </div>
+  );
+};
 // React Query 的核心流程是：
 // 初始化 QueryClient: 在父元件內創建一個 QueryClient 實例。
 // 提供 QueryClient: 使用 QueryClientProvider，將它傳遞給應用中的子元件。
 // 抓取資料: 在子元件中，使用 useQuery 去呼叫 API 並獲取資料。
 //`https://jsonplaceholder.typicode.com/users/${userId}`
+
 // 用 Query 成功抓取資料
 const MyComponent5 = () => {
   const [userId, setUserId] = useState(3);
@@ -191,58 +250,66 @@ export default Practice1203;
   /* <div className="header" style={mobileStyle}><div/> */
 }
 
-// 老師寫的
-// QueryClient
+// 老師寫的 ~~~~~
+// 初始化 QueryClient
 // const queryClient = new QueryClient({
 //   defaultOptions: {
 //     queries: {
-//       refetchOnWindowFocus: true,
+//       refetchOnWindowFocus: true, // 當視窗重新聚焦時，自動重新抓取資料
 //     },
 //   },
 // });
+
+// // 抓取 API 資料的函數
 // const fetchUser = async (userId) => {
-//   const data = await fetch(
+//   const response = await fetch(
 //     `https://jsonplaceholder.typicode.com/users/${userId}`
 //   );
-//   const json = data.json();
-//   return json;
+//   if (!response.ok) throw new Error("Network response was not ok");
+//   const data = await response.json();
+//   return data;
 // };
-// useQuery
+
+// // 顯示使用者資訊的元件
 // const GetUser = () => {
 //   const [userId, setUserId] = useState(1);
-//   const { isLoding, errpr, data } = useQuery([userId], () => {
-//     fetchUser(userId),
-//       {
-//         keepPreviousData: true,
-//         retry: 3,
-//         retryDelay: 1000,
-//         staleTime: 5000,
-//         cacheTime: 5000,
-//       };
-//     if (isLoding) return <h2>Loding</h2>;
-//     if (errpr) return <h2>Error</h2>;
-//     if (data)
-//       return (
-//         <div>
-//           <h2>{data?.name}</h2>
-//           <h3>{JSON.stringify(data)}</h3>
-//           <button
-//             onClick={() => {
-//               setUserId((prev) => prev + 1);
-//             }}
-//           >
-//             Add
-//           </button>
-//           <button
-//             onClick={() => {
-//               setUserId((prev) => prev - 1);
-//             }}
-//           >
-//             ---
-//           </button>
-//         </div>
-//       );
-//   });
+
+//   // 使用 useQuery 抓取資料
+//   const { isLoading, error, data } = useQuery(
+//     [userId], // 查詢的鍵值 (Key)，會根據 userId 的變化而重新觸發
+//     () => fetchUser(userId), // 資料抓取函數
+//     {
+//       keepPreviousData: true, // 保留先前的資料直到新資料加載完成
+//       retry: 3, // 若抓取失敗，重試 3 次
+//       retryDelay: 1000, // 每次重試間隔 1 秒
+//       staleTime: 5000, // 資料視為新鮮的時間 (5 秒)
+//       cacheTime: 5000, // 資料的緩存時間 (5 秒)
+//     }
+//   );
+
+//   if (isLoading) return <h2>Loading...</h2>; // 加載中
+//   if (error) return <h2>Error: {error.message}</h2>; // 發生錯誤
+
+//   return (
+//     <div>
+//       <h2>{data?.name}</h2>
+//       <h3>{JSON.stringify(data)}</h3>
+//       <button
+//         onClick={() => {
+//           setUserId((prev) => Math.min(prev + 1, 10)); // 限制 userId 最大為 10
+//         }}
+//       >
+//         Add
+//       </button>
+//       <button
+//         onClick={() => {
+//           setUserId((prev) => Math.max(prev - 1, 1)); // 限制 userId 最小為 1
+//         }}
+//       >
+//         ---
+//       </button>
+//     </div>
+//   );
 // };
 
 // const Practice1203 = () => {
