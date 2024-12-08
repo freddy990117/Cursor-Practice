@@ -2,11 +2,44 @@ import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import Hamburger from "hamburger-react";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-
+import axios from "axios";
 const Practice1203 = () => {
   return (
     <div>
-      <MyComponent3 />
+      <MyComponent4 />
+    </div>
+  );
+};
+
+// React Query 的核心流程是：
+// 初始化 QueryClient: 創建一個 QueryClient 實例。
+// 提供 QueryClient: 使用 QueryClientProvider，將它傳遞給應用中的子元件。
+// 抓取資料: 在子元件中，使用 useQuery 去呼叫 API 並獲取資料。
+//`https://jsonplaceholder.typicode.com/users/${userId}`
+// 練習抓取資料
+const MyComponent4 = () => {
+  const [userID, setUserID] = useState(2);
+  const [data, setData] = useState(null);
+  const getAPI = async () => {
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/users/${userID}`
+    );
+    setData(response.data);
+  };
+
+  useEffect(() => {
+    getAPI();
+  }, [userID]);
+  return (
+    <div>
+      {data ? (
+        <div>
+          <h1>{data.name}</h1>
+          <p>{data.email}</p>
+        </div>
+      ) : (
+        <p>loading</p>
+      )}
     </div>
   );
 };
