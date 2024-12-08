@@ -3,22 +3,57 @@ import { useMediaQuery } from "react-responsive";
 import Hamburger from "hamburger-react";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import axios from "axios";
+
 const Practice1203 = () => {
+  // 初始化 QueryClient
+  const queryClient = new QueryClient();
+
   return (
     <div>
-      <MyComponent4 />
+      <QueryClientProvider client={queryClient}>
+        <MyComponent5 />
+      </QueryClientProvider>
     </div>
   );
 };
 
 // React Query 的核心流程是：
-// 初始化 QueryClient: 創建一個 QueryClient 實例。
+// 初始化 QueryClient: 在父元件內創建一個 QueryClient 實例。
 // 提供 QueryClient: 使用 QueryClientProvider，將它傳遞給應用中的子元件。
 // 抓取資料: 在子元件中，使用 useQuery 去呼叫 API 並獲取資料。
 //`https://jsonplaceholder.typicode.com/users/${userId}`
+// 用 Query 成功抓取資料
+const MyComponent5 = () => {
+  const [userId, setUserId] = useState(3);
+
+  // 抓取資料
+  const fetchData = async (userId) => {
+    const response = await axios.get(
+      `https://jsonplaceholder.typicode.com/users/${userId}`
+    );
+    console.log(response.data);
+    return response.data;
+  };
+
+  // 使用 useQuery 去呼叫 API 並獲取資料
+  const { data, isLoading, error } = useQuery(["user", userId], () =>
+    fetchData(userId)
+  );
+
+  if (isLoading) return <p>Loading.....</p>;
+  if (error) return <p>Error : {error.maeeage}</p>;
+  return (
+    <div>
+      <h2>我是Component5</h2>
+      <h2>{data?.name}</h2>
+      <p>{JSON.stringify(data)}</p>
+    </div>
+  );
+};
+
 // 練習抓取資料
 const MyComponent4 = () => {
-  const [userID, setUserID] = useState(2);
+  const [userID, setUserID] = useState(1);
   const [data, setData] = useState(null);
   const getAPI = async () => {
     const response = await axios.get(
@@ -32,10 +67,12 @@ const MyComponent4 = () => {
   }, [userID]);
   return (
     <div>
+      <h2>我是Component4</h2>
+
       {data ? (
         <div>
-          <h1>{data.name}</h1>
-          <p>{data.email}</p>
+          <h2>{data.name}</h2>
+          <h2>{data.email}</h2>
         </div>
       ) : (
         <p>loading</p>
