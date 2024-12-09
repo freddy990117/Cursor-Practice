@@ -8,6 +8,23 @@ const API = fetch("https://data.moa.gov.tw/api/v1/PesticideCompanyType/");
    );
 })
 
+1112 : 
+1.Life Cycle 2.Props 3.useRef 4.ref={} 的綁定練習 5.全域與區域變數差異
+1.Life Cycle :
+指的是這個 Function 的開始與結束發生的事情，ex =>
+useEffect(()=>{
+  console.log("Life Cycle Start")
+
+  return "Life Cycle End"
+})
+
+2.Props :
+指的是參數，像是 const {name,age,where} = props 這樣，可以供 Function 使用 map、filter.....等操作，也可以用 props.name 取內部的值
+3.useRef
+指的是不會跟著 Render 改變的值?
+4.如果我設定 const hello = useRef("Hello")，我的 ref.current 就是 Hello，通常會使用在 <input>內使用 (嗎?)
+5.在 Function 內設定的就是區域變數 (內容會在該 Function return 時結束)，在 Components 外設定的是全域變數 (內容可以用在任何的 Function 內)
+
 1119 :
 創建屬於自己的 Components (forwardRef、useImperativeHandle)
 input、chechbox、select、button
