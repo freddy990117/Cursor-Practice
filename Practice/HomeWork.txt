@@ -11,19 +11,32 @@ const API = fetch("https://data.moa.gov.tw/api/v1/PesticideCompanyType/");
 1112 : 
 1.Life Cycle 2.Props 3.useRef 4.ref={} 的綁定練習 5.全域與區域變數差異
 1.Life Cycle :
-指的是這個 Function 的開始與結束發生的事情，ex =>
+生命週期 (Life Cycle) 指的是一個元件從建立 (Mounting)、更新 (Updating)、到銷毀 (Unmounting) 的過程中發生的事件。
+例如 ->
 useEffect(()=>{
   console.log("Life Cycle Start")
 
-  return "Life Cycle End"
+  return (
+    清理效果
+    console.log("Life Cycle End")
+  )
 })
 
 2.Props :
-指的是參數，像是 const {name,age,where} = props 這樣，可以供 Function 使用 map、filter.....等操作，也可以用 props.name 取內部的值
-3.useRef
-指的是不會跟著 Render 改變的值?
-4.如果我設定 const hello = useRef("Hello")，我的 ref.current 就是 Hello，通常會使用在 <input>內使用 (嗎?)
-5.在 Function 內設定的就是區域變數 (內容會在該 Function return 時結束)，在 Components 外設定的是全域變數 (內容可以用在任何的 Function 內)
+Props 是 React 元件間傳遞的資料，是一種只讀的值。
+可以用解構的方式取出，像是 const {name,age,where} = props，也可以用 props.name 、props["age"] 取內部的值。
+可以供 Function 使用 map、filter.....等操作
+
+3.useRef : 
+useRef 是用來存放一個「可變的值」，它不會因為元件的重新渲染而被重置。
+特性是 : 
+useRef 返回一個物件 { current: <value> }。
+ref.current 可以存取或更新該值，但這種改變不會觸發重新渲染。
+用途是 : 用在操作或控制 DOM、如倒數計時器的參數
+
+4.如果我設定 const hello = useRef("Hello")，我的 ref.current 就是 Hello，通常會使用在 <input> 內使用。
+
+5.在 Function 內設定的就是區域變數 (內容會在該 Function return 時結束)，在 Components 外設定的是全域變數 (內容可以用在任何的 Function 內使用)
 
 1119 :
 創建屬於自己的 Components (forwardRef、useImperativeHandle)
