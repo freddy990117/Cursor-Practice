@@ -24,22 +24,22 @@
 // export { ThemeContext, theme };
 // 第二次練習
 
-import { createContext } from "react";
+// import { createContext } from "react";
 
-const ThemeContext = createContext();
+// const ThemeContext = createContext();
 
-const theme = {
-  light: {
-    backgroundColor: "white",
-    fontColor: "black",
-  },
-  dark: {
-    backgroundColor: "black",
-    fontColor: "white",
-  },
-};
+// const theme = {
+//   light: {
+//     backgroundColor: "white",
+//     fontColor: "black",
+//   },
+//   dark: {
+//     backgroundColor: "black",
+//     fontColor: "white",
+//   },
+// };
 
-export { ThemeContext, theme };
+// export { ThemeContext, theme };
 // 第三次練習 多層次傳遞
 
 // 在 Apppp 中的 ThemeContext.Provider 是共享資料的起點，定義了組件樹內的共享狀態。
@@ -48,3 +48,12 @@ export { ThemeContext, theme };
 // 重點：
 // React Context 是為了避免「逐層傳遞 props」。
 // 你可以直接在「需要的組件」中透過 useContext 存取資料，讓程式碼更簡潔、易讀。
+import { createContext } from "react";
+
+const languages = {
+  en: { welcome: "Welcome", button: "Switch to Chinese" },
+  zh: { welcome: "歡迎", button: "切換成英文" },
+};
+
+const languageContext = createContext();
+export { languageContext, languages };

@@ -39,14 +39,25 @@
 // export default Parent;
 // 第二次練習
 
-import React, { useContext } from "react";
+// import React, { useContext } from "react";
+// import Child from "./Child";
+// const Parent = () => {
+//   // const { color, toggleTheme } = useContext(ThemeContext);
+//   // return <Child color={color} toggleTheme={toggleTheme} />;
+//   // 此時 Parent 已經有 ThemeContext.Provider 傳遞的 value (color, toggleTheme)，可以不用使用 Props 傳遞，直接寫入 Components 即可。
+//   return <Child />;
+// };
+
+// export default Parent;
+// 第三次練習 多層次傳遞
+import React from "react";
 import Child from "./Child";
 const Parent = () => {
-  // const { color, toggleTheme } = useContext(ThemeContext);
-  // return <Child color={color} toggleTheme={toggleTheme} />;
-  // 此時 Parent 已經有 ThemeContext.Provider 傳遞的 value (color, toggleTheme)，可以不用使用 Props 傳遞，直接寫入 Components 即可。
-  return <Child />;
+  return (
+    <div>
+      <Child />
+    </div>
+  );
 };
 
 export default Parent;
-// 第三次練習 多層次傳遞
