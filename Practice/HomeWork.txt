@@ -85,3 +85,9 @@ useCallback : 用於儲存函式
 4.React.memo 的作用是什麼？請簡單解釋。
 React.memo : 當子元件有設定 React.memo 時，會根據傳遞來的 props 去看父元件的 props 是否有更新
 如果有更新的話會 Re-Redner 子元件，通常搭配 useCallback 使用
+
+12/03 ? 
+
+12/07
+BrowerRouter,createBrowserRouter, RouterProvider, useContext 應用
+剩下  useNavigate useLocation 尚未練習
