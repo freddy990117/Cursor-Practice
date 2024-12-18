@@ -1,11 +1,10 @@
 import React from "react";
 import "./App.css";
-import Parent from "./Context/Parent";
-import Practice1217 from "../../Practice/Practice1217";
+import Layout from "./Pages/Layout";
 const App = () => {
   return (
     <div>
-      <Parent />
+      <Layout />
     </div>
   );
 };
