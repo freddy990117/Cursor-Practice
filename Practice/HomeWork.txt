@@ -86,8 +86,27 @@ useCallback : 用於儲存函式
 React.memo : 當子元件有設定 React.memo 時，會根據傳遞來的 props 去看父元件的 props 是否有更新
 如果有更新的話會 Re-Redner 子元件，通常搭配 useCallback 使用
 
-12/03 ? 
+12/03 
+使用 QueryClient 獲取資料，使用 useQuery 顯示資料，使用 useMediaQuery 達成 RWD 效果。
+React Query 的核心流程是：
+ 初始化 QueryClient: 在父元件內創建一個 QueryClient 實例。
+ 提供 QueryClient: 使用 QueryClientProvider，將它傳遞給應用中的子元件。
+ 抓取資料: 在子元件中，使用 useQuery 去呼叫 API 並獲取資料。
 
-12/07
-BrowerRouter,createBrowserRouter, RouterProvider, useContext 應用
-剩下  useNavigate useLocation 尚未練習
+QueryClient =>
+const queryClient = new QueryClient()
+<QueryClientProvider client={queryClient}>
+  <Component....... />
+</QueryClientProvider>
+useQuery => 很多參數需要釐清
+useMediaQuery
+
+12/10
+1.BrowerRouter,Routes,Route,
+1.5createBrowserRouter,RouterProvider router={XXXXXX}
+2.createBrowserRouter
+3.RouterProvider
+4.useContext
+5.useNavigate
+6.useLocation
+
