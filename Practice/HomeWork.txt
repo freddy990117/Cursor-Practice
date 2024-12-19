@@ -110,3 +110,36 @@ useMediaQuery
 5.useNavigate
 6.useLocation
 
+1. BrowserRouter, Routes, Route 問題：
+什麼是 BrowserRouter？它的主要功能是什麼？
+Routes 和 Route 的關係是什麼？在定義路由時，path 和 element 各代表什麼？
+Route 的 exact 屬性什麼時候需要使用？React Router v6 還需要它嗎？
+
+1-1 BrowerRouter 的主要功能是在 <BrowerRouter> 內部放入 Routes 與 Route </BrowerRouter>
+1-2 Route 要放在 Routes 內部，path 是要指向的路徑，element 是 path 路徑的 Component ? 
+假如path的路徑是 book path="/" 那 element 就會是一個 book 的 Component => path="/book" element={<Book/>}
+1-3 並沒有學到這部分，請跟我說:為什麼、為什麼需要、什麼時候需要使用
+
+1.5 createBrowserRouter, RouterProvider 問題：
+createBrowserRouter 與 BrowserRouter 的功能有什麼區別？
+如何使用 RouterProvider 將 createBrowserRouter 的路由設定應用到整個 React 應用？
+
+1.5-1 createBrowserRouter 是建立 Routes，並將所有的 Routes 都放在一個變數內，const Router = createBrowserRouter([{XXX,XXX},])
+與 BrowerRouter 最大的不同是書寫的方式? 因為我在練習時他們的功能是相近的。
+1.5-2 先 const Router = createBrowserRouter([{path:"/book",element:</Book>}])，再 return RouterProvider router={Router}
+
+2.createBrowserRouter 問題：
+createBrowserRouter 是如何定義路由的？它支持哪些屬性？
+如何在路由中設置 errorElement 來處理錯誤頁面？
+
+2.1 const Router = createBrowserRouter([{XXX,XXX},]) 來設定路由，屬性我不曉得，請跟我說
+2.2 並沒有學到這部分，請跟我說:為什麼、為什麼需要、什麼時候需要使用
+
+3.RouterProvider 問題：
+RouterProvider 有哪些功能？為什麼要用它？
+如何將 RouterProvider 和 createBrowserRouter 結合？
+
+3.1 我其實只知道 RouterProvider 可以設定路由，但不曉得他還有什麼其他功能 與 我應該用 RouterProvider 還是 BrowerRouter 
+
+3.2 使用以下即可將 RouterProvider 和 createBrowserRouter 結合
+const Router = createBrowserRouter([{path:"/book",element:</Book>}])，再 return RouterProvider router={Router} 
