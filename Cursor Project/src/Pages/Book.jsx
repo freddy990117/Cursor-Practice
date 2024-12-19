@@ -1,13 +1,12 @@
 import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Book = () => {
   const location = useLocation();
-  const state = location.state;
-  console.log(location);
+  const bookName = location.state;
   return (
     <div>
-      <h2>我是 {state.state}</h2>
+      <h2>我是 {bookName.state}</h2>
     </div>
   );
 };
