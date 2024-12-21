@@ -113,33 +113,79 @@ useMediaQuery
 1. BrowserRouter, Routes, Route 問題：
 什麼是 BrowserRouter？它的主要功能是什麼？
 Routes 和 Route 的關係是什麼？在定義路由時，path 和 element 各代表什麼？
-Route 的 exact 屬性什麼時候需要使用？React Router v6 還需要它嗎？
 
+回答 :
 1-1 BrowerRouter 的主要功能是在 <BrowerRouter> 內部放入 Routes 與 Route </BrowerRouter>
 1-2 Route 要放在 Routes 內部，path 是要指向的路徑，element 是 path 路徑的 Component ? 
 假如path的路徑是 book path="/" 那 element 就會是一個 book 的 Component => path="/book" element={<Book/>}
-1-3 並沒有學到這部分，請跟我說:為什麼、為什麼需要、什麼時候需要使用
+
 
 1.5 createBrowserRouter, RouterProvider 問題：
 createBrowserRouter 與 BrowserRouter 的功能有什麼區別？
 如何使用 RouterProvider 將 createBrowserRouter 的路由設定應用到整個 React 應用？
 
-1.5-1 createBrowserRouter 是建立 Routes，並將所有的 Routes 都放在一個變數內，const Router = createBrowserRouter([{XXX,XXX},])
-與 BrowerRouter 最大的不同是書寫的方式? 因為我在練習時他們的功能是相近的。
+回答 :
+1.5-1 createBrowserRouter 以陣列的方式設定路由，並多了 loader,action、errorElemet 的功能
+
 1.5-2 先 const Router = createBrowserRouter([{path:"/book",element:</Book>}])，再 return RouterProvider router={Router}
 
 2.createBrowserRouter 問題：
 createBrowserRouter 是如何定義路由的？它支持哪些屬性？
 如何在路由中設置 errorElement 來處理錯誤頁面？
 
-2.1 const Router = createBrowserRouter([{XXX,XXX},]) 來設定路由，屬性我不曉得，請跟我說
-2.2 並沒有學到這部分，請跟我說:為什麼、為什麼需要、什麼時候需要使用
+回答 :
+2-1 透過這些屬性來設定 
+path：路徑。
+element：對應的元件。
+loader：用於加載資料。
+action：用於處理表單提交等操作。
+errorElement：定義錯誤頁面。
+
+2-2 errorElement:<Page404/>
 
 3.RouterProvider 問題：
 RouterProvider 有哪些功能？為什麼要用它？
 如何將 RouterProvider 和 createBrowserRouter 結合？
 
-3.1 我其實只知道 RouterProvider 可以設定路由，但不曉得他還有什麼其他功能 與 我應該用 RouterProvider 還是 BrowerRouter 
+回答 :
+3-1 提供路由設定的完整功能，支援新 API（如 loader 和 action）。
 
-3.2 使用以下即可將 RouterProvider 和 createBrowserRouter 結合
+3-2 使用以下即可將 RouterProvider 和 createBrowserRouter 結合
 const Router = createBrowserRouter([{path:"/book",element:</Book>}])，再 return RouterProvider router={Router} 
+
+4.useContext 問題：
+useContext 的用途是什麼？它如何幫助元件間共享狀態？
+為什麼需要 Context.Provider？如果省略，會發生什麼？
+如何與 createContext 配合使用，提供全域資料？
+
+4-1 useContext 簡化了元件之間共享狀態的流程，讓我們可以直接取得 Context.Provider 提供的值，而無需使用 props 層層傳遞。
+4-2 如果省略的話能使用 props 的方式來傳遞，使用 useContext 的話只會取得 createContext 設定的預設值。
+4-3 Context 中 createContext，並將須使用該資料的 Component 放式 Provider 內，在到 Component 中使用 useContext，const {XXX,XXX} = useContext 
+
+問題：
+useNavigate 的功能是什麼？如何用它來導航至指定路徑？
+如何使用 state 傳遞資料？被導航的頁面如何接收？
+
+5-1 useNavigate 是用於程式化導航的 React Hook，允許開發者在代碼中導航至指定的路徑。 
+5-2 const navigate = useNavigate();
+navigate("/path", { state: { key: "value" } });
+
+const location = useLocation();
+console.log(location.state?.key); // "value"
+
+6.useLocation 問題：
+useLocation 的功能是什麼？如何從中讀取目前的路徑資訊？
+useLocation 如何與 useNavigate 一起使用來傳遞資料？
+
+6-1 
+const location = useLocation()，其中包含的物件有 : 
+pathname：目前的路徑。
+search：查詢參數。
+hash：URL 的 hash 部分。
+state：透過 useNavigate 傳遞的資料。
+
+6-2 Homepage 使用 
+const navigate : useNavigate()，並在事件內設定 navigate(path="/book" state:{key:"被討厭的勇氣"})
+在 book 使用 
+const location = useLocation，使用 location.state?.key => 被討厭的勇氣
+前面加個 ? 可以防止沒有找到 key 顯示不出來的狀況。
