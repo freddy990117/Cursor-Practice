@@ -33,10 +33,10 @@ useRef 是用來存放一個「可變的值」，它不會因為元件的重新�
 useRef 返回一個物件 { current: <value> }。
 ref.current 可以存取或更新該值，但這種改變不會觸發重新渲染。
 用途是 : 用在操作或控制 DOM、如倒數計時器的參數
+如果我設定 const hello = useRef("Hello")，我的 ref.current 就是 Hello，通常會使用在 <input> 內使用。
 
-4.如果我設定 const hello = useRef("Hello")，我的 ref.current 就是 Hello，通常會使用在 <input> 內使用。
-
-5.在 Function 內設定的就是區域變數 (內容會在該 Function return 時結束)，在 Components 外設定的是全域變數 (內容可以用在任何的 Function 內使用)
+4.區域變數 :
+在 Function 內設定的就是區域變數 (內容會在該 Function return 時結束)，在 Components 外設定的是全域變數 (內容可以用在任何的 Function 內使用)
 
 
 1119 :
@@ -47,29 +47,61 @@ forwardRef、useImperativeHandle 測驗 :
 基礎問題
 
 1.forwardRef 的作用是什麼？為什麼我們需要它？
-接收外部的 props 與 ref，因為 React 只能是單向的傳遞，但使用 forwardRef 可以達成雙向傳遞的效果
+forwardRef 的作用是讓子元件能接收父元件傳遞的 ref，並將這個 ref 指向子元件內部的 DOM 節點或自定義的物件，這樣父元件就可以直接控制子元件的 DOM 或自定義方法。
 
 2.當父元件使用 useRef 傳遞給子元件時，子元件會如何接收這個 ref？是通過哪個參數？
-會使用 forwardRef 的第二個參數 ref 來接收父元件傳遞的 ref。
+父元件的 useRef 透過 forwardRef 的第二個參數傳遞到子元件，這樣子元件就能使用父元件傳遞進來的 ref。
 
 3.如果子元件中沒有使用 useImperativeHandle，那麼父元件的 ref.current 會是什麼？
-會是父元件內 useRef("XXXXX") 的 XXXXX 
+如果子元件沒有使用 useImperativeHandle，那麼 ref.current 指向的是子元件內的 DOM 節點 或子元件本身的實例。
+如果子元件有使用 useImperativeHandle，那麼 ref.current 會是 useImperativeHandle 返回的物件，並覆蓋掉原本的值
+
 進階問題
 
 4.在 useImperativeHandle 中，第一個參數 ref 是什麼？它的來源是什麼？
 是由子元件 forwardRef 第二個參數接收到的 ref，它的來源是父元件內設定的 useRef
 
 5.在 useImperativeHandle 中，第二個參數是一個函式，它的返回值是什麼，返回的內容會被用在哪裡？
-I don't know
+返回的會是一個物件，該物件會成為 ref.current 的值，這樣父元件可以通過 ref.current 操作子元件的方法或屬性
 
 6.在 useImperativeHandle 中為什麼要有第三個參數（依賴陣列）？如果不提供這個陣列會發生什麼情況？
-如果沒有設定依賴陣列 []，只會在 Render 時執行一次，若有，會在該依賴陣列改變時重新 Render
+如果沒有提供依賴陣列，useImperativeHandle 會在每次重新渲染時執行，這可能會影響性能。
+如果提供空陣列（[]），useImperativeHandle 只會在初次渲染時執行一次。
 
 情境問題
 7.如果你想讓父元件控制子元件的 input，如聚焦或清除內容，如何設計一個有 forwardRef 和 useImperativeHandle 的子元件來實現？（用文字或程式碼簡述）
+子元件 : 
+const ChildComponent = forwardRef((props, ref) => { 
+  const InputRef = useRef();
+
+  useImperativeHandle(ref, () => ({ 
+    focus: () => { 
+      InputRef.current.focus() =  // 聚焦在 input 
+    },
+    clear: () => { 
+      InputRef.current.value = "!"; // 清除 input
+    },
+  }));
+
+  return (
+    <input ref={InputRef} />
+  );
+});
 
 8.如果 useImperativeHandle 中返回了 { increment: () => setCount(count + 1) }，父元件要如何呼叫 increment？
+XXXX.current.increment
+
 9.你認為 useImperativeHandle 的最佳使用場景是什麼？可以舉一個你能想像的例子嗎？
+手動操作子元件的行為：
+當子元件內有方法需要父元件控制，例如：
+表單操作： 清除輸入框內容、讓某個輸入框獲得焦點。
+滾動控制： 父元件需要滾動到特定的子元件（scrollIntoView）。
+動畫控制： 控制某些動畫啟動或停止。
+
+10.在團隊開發中，如何確保 useImperativeHandle 的使用不會導致元件邏輯混亂或難以維護？
+僅在必要時使用
+確保用例合理： 僅當需要父元件操控子元件的內部狀態或行為時使用，例如表單重置、滾動操作、聚焦控制等。
+避免過度使用： 如果可以通過 props 或狀態提升解決問題，就不應使用
 
 
 11/26
